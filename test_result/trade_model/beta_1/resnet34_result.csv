@@ -1,0 +1,5 @@
+model,datatype,accuracy,sensitivity(MSI),specificity(MSS)
+checkpoints_model/trade_model/resnet34_parameter.pkl,clean,0.5048958154633869,0.4158124700416651,0.7292566281283372
+checkpoints_model/trade_model/resnet34_best_parameter.pkl,robust,0.08041805777326172,0.10450388997455846,0.01975669777592051
+checkpoints_model/trade_model/resnet34_best_parameter.pkl,clean,0.6654943981841935,0.7252037166771137,0.515113525560663
+checkpoints_model/trade_model/resnet34_best_parameter.pkl,robust,0.009587088771295478,0.005060654105674569,0.02098713841296374

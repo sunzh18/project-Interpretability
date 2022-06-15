@@ -1,0 +1,3 @@
+checkpoints_model/trade_model/beta_6/resnet34_parameter.pkl,robust,0.09691339289249,0.11290144168725343,0.05664670102614106
+checkpoints_model/trade_model/beta_6/resnet34_parameter.pkl,clean,0.5152482877842146,0.4053593156594521,0.7920091006175419
+checkpoints_model/trade_model/beta_6/resnet34_parameter.pkl,robust,0.20301798651341402,0.09514767154603444,0.4746947114268468

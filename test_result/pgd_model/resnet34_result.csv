@@ -1,0 +1,5 @@
+model,datatype,accuracy,sensitivity(MSI),specificity(MSS)
+checkpoints_model/pgd_model/random_init/resnet34_parameter.pkl,clean,0.5297773789572309,0.4569429593304082,0.7132144681246227
+checkpoints_model/pgd_model/random_init/resnet34_parameter.pkl,robust,0.2788239485873395,0.2913148482725563,0.24736499976784138
+checkpoints_model/pgd_model/random_init/resnet34_parameter.pkl,clean,0.5065321527072144,0.42021864975480255,0.7239169800807912
+checkpoints_model/pgd_model/random_init/resnet34_parameter.pkl,robust,0.15383549532192295,0.1009273256885808,0.287087338069369
