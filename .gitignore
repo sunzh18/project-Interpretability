@@ -1,4 +1,4 @@
-cifar10data\
+cifar10data\*
 *.pkl
 checkpoints_model\
-ImageNetdata\
+ImageNetdata\*
