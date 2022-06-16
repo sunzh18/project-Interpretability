@@ -1,2 +1,3 @@
 cifar10data\
 *.pkl
+checkpoints_model\
