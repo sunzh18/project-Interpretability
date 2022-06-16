@@ -116,7 +116,7 @@ def test_model(model, data_loader):
 def trade_train_model(opts, cnn, train_dataloader, val_dataloader, model_name):
     criterion = nn.CrossEntropyLoss()                     #交叉熵损失                 
     optimizer = optim.SGD(cnn.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
-    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[20,50,70],gamma = 0.5)
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[20,50, 70, 100, 150],gamma = 0.5)
     Train_accuracy = list()      #训练集正确率列表
     Val_accuracy = list()        #验证集正确率列表
     Train_loss = list()
