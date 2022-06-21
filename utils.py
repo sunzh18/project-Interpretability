@@ -17,11 +17,17 @@ MSI_test_folder = "../../xiaohui/tumor_patch/test/MSI"
 MSS_test_folder = "../../xiaohui/tumor_patch/test/MSS"
 
 
-cat_train_folder = "cifar10data/train/cat"
-dog_train_folder = "cifar10data/train/dog"
+# cat_train_folder = "cifar10data/train/cat"
+# dog_train_folder = "cifar10data/train/dog"
 
-cat_val_folder = "cifar10data/test/cat"
-dog_val_folder = "cifar10data/test/dog"
+# cat_val_folder = "cifar10data/test/cat"
+# dog_val_folder = "cifar10data/test/dog"
+
+cat_train_folder = "ImageNetdata/train/cat"
+dog_train_folder = "ImageNetdata/train/dog"
+
+cat_val_folder = "ImageNetdata/val/cat"
+dog_val_folder = "ImageNetdata/val/dog"
 
 epsilon = 0.031
 alpha = 0.007

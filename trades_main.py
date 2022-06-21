@@ -116,7 +116,7 @@ def test_model(model, data_loader):
 def trade_train_model(opts, cnn, train_dataloader, val_dataloader, model_name):
     criterion = nn.CrossEntropyLoss()                     #交叉熵损失                 
     optimizer = optim.SGD(cnn.parameters(), lr=learning_rate, momentum=0.9, weight_decay=5e-4)
-    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[20,50, 70, 100, 150],gamma = 0.5)
+    scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[50, 90],gamma = 0.5)
     Train_accuracy = list()      #训练集正确率列表
     Val_accuracy = list()        #验证集正确率列表
     Train_loss = list()
@@ -166,13 +166,13 @@ def trade_train_model(opts, cnn, train_dataloader, val_dataloader, model_name):
         train_Robust_acc = Robust_accu / num
         train_loss = Loss / num
 #         if epoch % 10 == 0:
-        torch.save(cnn.state_dict(),f'checkpoints_model/{model_name}/cifar10_{opts.model}_parameter.pkl') 
+        torch.save(cnn.state_dict(),f'checkpoints_model/{model_name}/ImageNet_{opts.model}_parameter.pkl') 
     
         val_acc, val_loss = test_model(cnn, val_dataloader)
         
         if best_val_acc <= val_acc:
             best_val_acc = val_acc
-            torch.save(cnn.state_dict(),f'checkpoints_model/{model_name}/cifar10_{opts.model}_best_parameter.pkl') 
+            torch.save(cnn.state_dict(),f'checkpoints_model/{model_name}/ImageNet_{opts.model}_best_parameter.pkl') 
             
         
         Train_accuracy.append(train_Natural_acc)
@@ -183,7 +183,7 @@ def trade_train_model(opts, cnn, train_dataloader, val_dataloader, model_name):
         print("epoch =",epoch,":\nval-- accuracy =",val_acc,"loss =",val_loss)
         
         
-        fp = open(f'draw_result/{model_name}/cifar10_{opts.model}_Natural_acc.csv','a+')
+        fp = open(f'draw_result/{model_name}/ImageNet_{opts.model}_Natural_acc.csv','a+')
         acc_result = []
         acc_result.append(epoch)
         acc_result.append(train_Natural_acc)
@@ -192,7 +192,7 @@ def trade_train_model(opts, cnn, train_dataloader, val_dataloader, model_name):
         context.writerow(acc_result)
         fp.close()
 
-        fp = open(f'draw_result/{model_name}/cifar10_{opts.model}_train_Robust_acc.csv','a+')
+        fp = open(f'draw_result/{model_name}/ImageNet_{opts.model}_train_Robust_acc.csv','a+')
         acc_result = []
         acc_result.append(epoch)
         acc_result.append(train_Robust_acc)
@@ -200,7 +200,7 @@ def trade_train_model(opts, cnn, train_dataloader, val_dataloader, model_name):
         context.writerow(acc_result)
         fp.close()
         
-        fp = open(f'draw_result/{model_name}/cifar10_{opts.model}_loss.csv','a+')
+        fp = open(f'draw_result/{model_name}/ImageNet_{opts.model}_loss.csv','a+')
         loss_result = []
         loss_result.append(epoch)
         loss_result.append(train_loss)
@@ -272,17 +272,41 @@ transform5 = transforms.Compose([
                             
 ])
 
+transform6 = transforms.Compose([
+    transforms.RandomResizedCrop(224),
+    transforms.RandomHorizontalFlip(),  #图像一半的概率翻转，一半的概率不翻转
+    transforms.RandomVerticalFlip(),
+    
+    transforms.ToTensor(),
+    transforms.Normalize(
+    mean=[0.485, 0.456, 0.406],
+    std=[0.229, 0.224, 0.225]
+    )
+                            
+])
+
+transform7 = transforms.Compose([
+    transforms.Resize((224,224)),
+    transforms.ToTensor(),
+    transforms.Normalize(
+    mean=[0.485, 0.456, 0.406],
+    std=[0.229, 0.224, 0.225]
+    )
+    
+                            
+])
+
 # train_MSI_Data = Mydataset(MSI_train_folder, 1, transform)
 # train_MSS_Data = Mydataset(MSS_train_folder, 0, transform)
 
 # val_MSI_Data = Mydataset(MSI_val_folder, 1, transform2)
 # val_MSS_Data = Mydataset(MSS_val_folder, 0, transform2)
 
-train_cat_Data = Mydataset(cat_train_folder, 1, transform4)
-train_dog_Data = Mydataset(dog_train_folder, 0, transform4)
+train_cat_Data = Mydataset(cat_train_folder, 1, transform6)
+train_dog_Data = Mydataset(dog_train_folder, 0, transform6)
 
-val_cat_Data = Mydataset(cat_val_folder, 1, transform5)
-val_dog_Data = Mydataset(dog_val_folder, 0, transform5)
+val_cat_Data = Mydataset(cat_val_folder, 1, transform7)
+val_dog_Data = Mydataset(dog_val_folder, 0, transform7)
 
 # test_MSI_Data = Mydataset(MSI_test_folder, 1, transform2)
 # test_MSS_Data = Mydataset(MSS_test_folder, 0, transform2)
