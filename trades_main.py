@@ -33,11 +33,11 @@ import csv
 # 获得训练集和验证集
 def get_dataloader(batch_size):
 #     dataset = raw_diff_Data
-    # train_dataset = train_MSI_Data + train_MSS_Data
-    # val_dataset = val_MSI_Data + val_MSS_Data
+    train_dataset = train_MSI_Data + train_MSS_Data
+    val_dataset = val_MSI_Data + val_MSS_Data
 
-    train_dataset = train_cat_Data+ train_dog_Data
-    val_dataset = val_cat_Data + val_dog_Data
+    # train_dataset = train_cat_Data+ train_dog_Data
+    # val_dataset = val_cat_Data + val_dog_Data
 
     
     train_dataloader = DataLoader(train_dataset,batch_size=batch_size,shuffle=True, num_workers=2) 
@@ -54,6 +54,9 @@ def attack_pgd_full_linf(model, X, y, loss_fn,
         # amp context beg
         # with autocast():
         output = model(X + delta)
+
+        # output[range(0:n),y]
+
         loss = loss_fn(output, y)
         loss.backward()
         # amp context end
@@ -223,6 +226,10 @@ def get_model(opts):
         model = vgg_Network()
         model_name = 'vgg'
 
+    elif opts.model == 'resnet50':
+        model = Resnet50_Network()
+        model_name = 'resnet'
+
     else:
         model = Resnet_Network()
     return model_name, model
@@ -296,17 +303,17 @@ transform7 = transforms.Compose([
                             
 ])
 
-# train_MSI_Data = Mydataset(MSI_train_folder, 1, transform)
-# train_MSS_Data = Mydataset(MSS_train_folder, 0, transform)
+train_MSI_Data = Mydataset(MSI_train_folder, 1, transform)
+train_MSS_Data = Mydataset(MSS_train_folder, 0, transform)
 
-# val_MSI_Data = Mydataset(MSI_val_folder, 1, transform2)
-# val_MSS_Data = Mydataset(MSS_val_folder, 0, transform2)
+val_MSI_Data = Mydataset(MSI_val_folder, 1, transform2)
+val_MSS_Data = Mydataset(MSS_val_folder, 0, transform2)
 
-train_cat_Data = Mydataset(cat_train_folder, 1, transform6)
-train_dog_Data = Mydataset(dog_train_folder, 0, transform6)
+# train_cat_Data = Mydataset(cat_train_folder, 1, transform6)
+# train_dog_Data = Mydataset(dog_train_folder, 0, transform6)
 
-val_cat_Data = Mydataset(cat_val_folder, 1, transform7)
-val_dog_Data = Mydataset(dog_val_folder, 0, transform7)
+# val_cat_Data = Mydataset(cat_val_folder, 1, transform7)
+# val_dog_Data = Mydataset(dog_val_folder, 0, transform7)
 
 # test_MSI_Data = Mydataset(MSI_test_folder, 1, transform2)
 # test_MSS_Data = Mydataset(MSS_test_folder, 0, transform2)

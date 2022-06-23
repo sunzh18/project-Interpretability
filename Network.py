@@ -17,6 +17,19 @@ class Resnet_Network(nn.Module):
         out = self.model(x)
         return out 
 
+
+class Resnet50_Network(nn.Module):
+    def __init__(self):
+        super(Resnet50_Network, self).__init__()
+        self.model = models.resnet50()
+
+        num_ftrs = self.model.fc.in_features
+        self.model.fc = nn.Linear(num_ftrs, 2)
+#         self.model.fc = nn.Linear(num_ftrs, 3)
+  
+    def forward(self, x):
+        out = self.model(x)
+        return out 
     
 # 使用vgg11网络结构
 class vgg_Network(nn.Module):                                              
